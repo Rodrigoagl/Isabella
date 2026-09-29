@@ -149,12 +149,15 @@
   /* Reverso: libreta de periodista */
   .back {
     transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     background-color: var(--note);
     background-image:
       linear-gradient(90deg, transparent 2.6rem, var(--margin) 2.6rem, var(--margin) calc(2.6rem + 1.5px), transparent calc(2.6rem + 1.5px)),
-      repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--rule) calc(2rem - 1px), var(--rule) 2rem);
-    background-position: 0 0, 0 3.75rem;
-    padding: 4.1rem 1.6rem 2rem 3.3rem;
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.6rem - 1px), var(--rule) calc(1.6rem - 1px), var(--rule) 1.6rem);
+    background-position: 0 0, 0 3.3rem;
+    padding: 3.6rem 1.4rem 1.2rem 3.2rem;
   }
   .spiral {
     position: absolute;
@@ -168,8 +171,8 @@
   }
   .spiral i { width: .7rem; height: .7rem; border-radius: 50%; background: var(--bg); box-shadow: inset 0 1px 2px rgba(0,0,0,.5); }
   .message {
-    font-size: 1.2rem;
-    line-height: 2rem;
+    font-size: .95rem;
+    line-height: 1.6rem;
     margin: 0;
     white-space: pre-line;
     color: #2A2622;
@@ -177,6 +180,13 @@
     overflow-y: auto;
   }
   .stain { position: absolute; right: -1.4rem; bottom: -1.2rem; width: 7.5rem; opacity: .5; pointer-events: none; }
+
+  @media (max-height: 740px) {
+    .back { background-image:
+      linear-gradient(90deg, transparent 2.6rem, var(--margin) 2.6rem, var(--margin) calc(2.6rem + 1.5px), transparent calc(2.6rem + 1.5px)),
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.45rem - 1px), var(--rule) calc(1.45rem - 1px), var(--rule) 1.45rem); }
+    .message { font-size: .88rem; line-height: 1.45rem; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .card { transition: none; }
@@ -302,8 +312,8 @@
 <script>
   // Cambia aquí la respuesta y el mensaje.
   // La respuesta no distingue mayúsculas, tildes ni espacios.
-  const RESPUESTA = "1234";
-  const MENSAJE = "Hola";
+  const RESPUESTA = "Mendruguito";
+  const MENSAJE = "Sé que te está costando irte, sobre todo por tus tíos. Pero también sé que es la decisión correcta, y que llevabas tiempo queriendo tomarla.\n\nEstos meses han sido muy duros y los has sacado adelante. Eres mucho más fuerte de lo que crees.\n\nA partir de ahora todo va a ir genial.\nTe quiero mucho.";
 
   const normalize = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "").toLowerCase();
 
