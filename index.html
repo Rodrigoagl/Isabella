@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>☕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg: #2E211A;
+    --bg-deep: #1C140F;
+    --marble: #EEEBE4;
+    --vein: #D6D1C7;
+    --paper: #E8E2D3;
+    --paper-dark: #DCD5C3;
+    --print: #A69E8D;
+    --print-dark: #5E574B;
+    --coffee: #4A2C1A;
+    --crema: #B98253;
+    --porcelain: #FBFAF7;
+    --porcelain-shade: #E6E3DC;
+    --steel: #A9AFAF;
+    --steel-dark: #7E8687;
+    --filter: #D8A15F;
+    --ember: #E2663B;
+    --ticket: #FFFEFA;
+    --ink: #1E1A16;
+    --note: #FAF7EC;
+    --rule: #C9D6E3;
+    --margin: #E3A39A;
+    --type: "Special Elite", "Courier New", Courier, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #261B15; --bg-deep: #150F0B; }
+  }
+  :root[data-theme="dark"] { --bg: #261B15; --bg-deep: #150F0B; }
+
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+  *, *::before, *::after { box-sizing: inherit; }
+  body {
+    margin: 0;
+    height: 100%;
+    background-color: var(--bg);
+    background-image: radial-gradient(110% 80% at 50% 10%, var(--bg) 0%, var(--bg-deep) 100%);
+    color: var(--ink);
+    font-family: var(--type);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    overflow: hidden;
+  }
+
+  .scene { width: 100%; max-width: 22rem; perspective: 1400px; }
+  .card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 7.4;
+    max-height: calc(100vh - 2.5rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    margin: 0 auto;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(.2,.7,.2,1);
+  }
+  .card.open { transform: rotateY(180deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-shadow: 0 30px 60px -22px rgba(0,0,0,.7), 0 8px 16px -8px rgba(0,0,0,.4);
+  }
+
+  /* Portada: mesa de mármol */
+  .front { background: var(--marble); }
+  .front svg.table { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .smoke path {
+    fill: none;
+    stroke: rgba(120,120,118,.45);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 60 200;
+    animation: smoke 5s linear infinite;
+  }
+  .smoke path:nth-child(2) { stroke-width: 2; animation-delay: -2.5s; stroke: rgba(120,120,118,.3); }
+  @keyframes smoke {
+    0% { stroke-dashoffset: 60; opacity: 0; }
+    15% { opacity: 1; }
+    100% { stroke-dashoffset: -200; opacity: 0; }
+  }
+
+  /* Ticket del café con la respuesta */
+  form.ticket {
+    position: absolute;
+    right: 6%;
+    bottom: 5%;
+    width: 54%;
+    background: var(--ticket);
+    padding: .9rem .8rem 1.3rem;
+    transform: rotate(-4deg);
+    box-shadow: 0 6px 14px -6px rgba(0,0,0,.35);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), 94% 100%, 88% calc(100% - 8px), 82% 100%, 76% calc(100% - 8px), 70% 100%, 64% calc(100% - 8px), 58% 100%, 52% calc(100% - 8px), 46% 100%, 40% calc(100% - 8px), 34% 100%, 28% calc(100% - 8px), 22% 100%, 16% calc(100% - 8px), 10% 100%, 4% calc(100% - 8px), 0 100%);
+  }
+  .ticket .bars { display: flex; flex-direction: column; gap: 5px; margin-bottom: .7rem; }
+  .ticket .bars span { display: block; height: 4px; background: #D9D4C8; border-radius: 2px; }
+  .ticket .bars span:nth-child(1) { width: 55%; margin: 0 auto 3px; background: #BDB6A7; }
+  .ticket .bars span:nth-child(2) { width: 100%; }
+  .ticket .bars span:nth-child(3) { width: 80%; }
+  .ticket .row { display: flex; align-items: center; gap: .4rem; border-top: 1.5px dashed #BDB6A7; padding-top: .6rem; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .ticket input {
+    flex: 1;
+    min-width: 0;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    padding: .35rem 0;
+  }
+  .ticket input::placeholder { color: #A39C8E; }
+  .ticket input:focus { outline: none; }
+  .ticket:focus-within { box-shadow: 0 6px 14px -6px rgba(0,0,0,.35), 0 0 0 2px var(--crema); }
+  .ticket button {
+    flex: none;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: none;
+    background: var(--coffee);
+    color: var(--porcelain);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+  .ticket button:focus-visible { outline: 2px solid var(--crema); outline-offset: 2px; }
+  .ticket button svg { width: 1rem; height: 1rem; }
+  .shake { animation: shake 360ms ease; }
+  @keyframes shake { 20%, 60% { transform: rotate(-4deg) translateX(-6px); } 40%, 80% { transform: rotate(-4deg) translateX(6px); } }
+
+  /* Reverso: libreta de periodista */
+  .back {
+    transform: rotateY(180deg);
+    background-color: var(--note);
+    background-image:
+      linear-gradient(90deg, transparent 2.6rem, var(--margin) 2.6rem, var(--margin) calc(2.6rem + 1.5px), transparent calc(2.6rem + 1.5px)),
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(2rem - 1px), var(--rule) calc(2rem - 1px), var(--rule) 2rem);
+    background-position: 0 0, 0 3.75rem;
+    padding: 4.1rem 1.6rem 2rem 3.3rem;
+  }
+  .spiral {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2.4rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: var(--paper-dark);
+    border-bottom: 1px solid #CFC7B2;
+  }
+  .spiral i { width: .7rem; height: .7rem; border-radius: 50%; background: var(--bg); box-shadow: inset 0 1px 2px rgba(0,0,0,.5); }
+  .message {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    margin: 0;
+    white-space: pre-line;
+    color: #2A2622;
+    max-height: 100%;
+    overflow-y: auto;
+  }
+  .stain { position: absolute; right: -1.4rem; bottom: -1.2rem; width: 7.5rem; opacity: .5; pointer-events: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+    .shake { animation: none; }
+    .smoke path { animation: none; stroke-dasharray: none; opacity: .5; }
+  }
+</style>
+</head>
+<body>
+  <main class="scene">
+    <div class="card" id="card">
+      <section class="face front" id="front">
+        <svg class="table" viewBox="0 0 300 444" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mesa de café con un periódico, un café y un cigarro en el cenicero">
+          <defs>
+            <radialGradient id="crema" cx="45%" cy="40%" r="60%">
+              <stop offset="0" stop-color="#C99466"/>
+              <stop offset=".55" stop-color="#A86F43"/>
+              <stop offset="1" stop-color="#6B4024"/>
+            </radialGradient>
+            <radialGradient id="steel" cx="40%" cy="35%" r="70%">
+              <stop offset="0" stop-color="#C9CECE"/>
+              <stop offset="1" stop-color="#8F9798"/>
+            </radialGradient>
+            <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".18"/>
+            </filter>
+          </defs>
+
+          <!-- Vetas del mármol -->
+          <g fill="none" stroke="var(--vein)" stroke-linecap="round">
+            <path d="M-10 60 C60 90 90 40 170 80 S260 60 320 110" stroke-width="1.2"/>
+            <path d="M-10 250 C50 230 110 290 180 260 S270 300 320 280" stroke-width="1"/>
+            <path d="M40 444 C70 400 140 420 180 380 S250 360 300 330" stroke-width="1.4"/>
+          </g>
+
+          <!-- Periódico doblado -->
+          <g transform="rotate(-9 110 140)" filter="url(#soft)">
+            <rect x="18" y="26" width="190" height="236" fill="var(--paper)"/>
+            <rect x="113" y="26" width="95" height="236" fill="var(--paper-dark)"/>
+            <rect x="30" y="38" width="166" height="16" fill="var(--print-dark)"/>
+            <rect x="30" y="58" width="166" height="1.5" fill="var(--print-dark)"/>
+            <rect x="30" y="66" width="120" height="8" fill="var(--print-dark)" opacity=".85"/>
+            <rect x="30" y="78" width="90" height="8" fill="var(--print-dark)" opacity=".85"/>
+            <rect x="30" y="94" width="76" height="52" fill="var(--print)" opacity=".75"/>
+            <g fill="var(--print)">
+              <rect x="30" y="152" width="76" height="3"/><rect x="30" y="159" width="70" height="3"/><rect x="30" y="166" width="76" height="3"/>
+              <rect x="30" y="173" width="60" height="3"/><rect x="30" y="180" width="76" height="3"/><rect x="30" y="187" width="72" height="3"/>
+              <rect x="30" y="194" width="76" height="3"/><rect x="30" y="201" width="50" height="3"/>
+              <rect x="30" y="212" width="76" height="3"/><rect x="30" y="219" width="68" height="3"/><rect x="30" y="226" width="76" height="3"/>
+              <rect x="30" y="233" width="74" height="3"/><rect x="30" y="240" width="40" height="3"/>
+              <rect x="120" y="94" width="76" height="3"/><rect x="120" y="101" width="70" height="3"/><rect x="120" y="108" width="76" height="3"/>
+              <rect x="120" y="115" width="76" height="3"/><rect x="120" y="122" width="58" height="3"/>
+              <rect x="120" y="134" width="76" height="6" fill="var(--print-dark)" opacity=".7"/>
+              <rect x="120" y="146" width="76" height="3"/><rect x="120" y="153" width="72" height="3"/><rect x="120" y="160" width="76" height="3"/>
+              <rect x="120" y="167" width="64" height="3"/><rect x="120" y="174" width="76" height="3"/><rect x="120" y="181" width="76" height="3"/>
+              <rect x="120" y="188" width="46" height="3"/>
+              <rect x="120" y="200" width="36" height="44" opacity=".8"/>
+              <rect x="160" y="200" width="36" height="3"/><rect x="160" y="207" width="30" height="3"/><rect x="160" y="214" width="36" height="3"/>
+              <rect x="160" y="221" width="36" height="3"/><rect x="160" y="228" width="26" height="3"/>
+            </g>
+            <rect x="112.5" y="26" width="1" height="236" fill="#CFC7B2"/>
+          </g>
+
+          <!-- Café -->
+          <g filter="url(#soft)">
+            <ellipse cx="222" cy="232" rx="58" ry="58" fill="var(--porcelain)"/>
+            <ellipse cx="222" cy="232" rx="46" ry="46" fill="var(--porcelain-shade)"/>
+            <!-- cucharilla -->
+            <g transform="rotate(35 222 232)">
+              <rect x="219.5" y="178" width="5" height="44" rx="2.5" fill="url(#steel)"/>
+              <ellipse cx="222" cy="176" rx="7" ry="10" fill="url(#steel)"/>
+            </g>
+            <!-- asa -->
+            <rect x="254" y="218" width="26" height="14" rx="7" fill="var(--porcelain)" transform="rotate(20 254 225)" stroke="var(--porcelain-shade)" stroke-width="1"/>
+            <circle cx="222" cy="232" r="37" fill="var(--porcelain)" stroke="var(--porcelain-shade)" stroke-width="1.5"/>
+            <circle cx="222" cy="232" r="30" fill="url(#crema)"/>
+            <path d="M206 226 C214 218 230 220 236 230 C230 238 216 240 206 226Z" fill="#D4A27A" opacity=".45"/>
+          </g>
+
+          <!-- Cenicero y cigarro -->
+          <g filter="url(#soft)" transform="translate(-12 -8)">
+            <circle cx="78" cy="330" r="40" fill="url(#steel)"/>
+            <circle cx="78" cy="330" r="30" fill="var(--steel-dark)"/>
+            <circle cx="72" cy="336" r="4" fill="#9A9A96" opacity=".7"/>
+            <circle cx="84" cy="340" r="2.5" fill="#9A9A96" opacity=".6"/>
+            <g transform="rotate(-38 78 330)">
+              <rect x="74" y="325" width="70" height="8" rx="2" fill="#FFFFFF"/>
+              <rect x="126" y="325" width="18" height="8" rx="2" fill="var(--filter)"/>
+              <rect x="128" y="325" width="1" height="8" fill="#C48B4B"/>
+              <rect x="66" y="325.5" width="9" height="7" rx="2" fill="#B5B2AC"/>
+              <circle cx="66" cy="329" r="3.2" fill="var(--ember)"/>
+            </g>
+          </g>
+          <g class="smoke" transform="translate(56 328)">
+            <path d="M0 0 C-8 -16 10 -26 0 -42 S-6 -70 6 -86 S-2 -110 4 -130"/>
+            <path d="M2 -4 C10 -18 -6 -30 4 -46 S12 -72 0 -90"/>
+          </g>
+        </svg>
+
+        <form class="ticket" id="form" autocomplete="off">
+          <div class="bars" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="row">
+            <label for="r" class="sr">Respuesta</label>
+            <input id="r" type="text" placeholder="Respuesta" autocapitalize="off" spellcheck="false" required>
+            <button type="submit" aria-label="Abrir">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h9M8.5 4l4 4-4 4"/></svg>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="face back" id="back" aria-hidden="true">
+        <div class="spiral" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="message" id="message"></p>
+        <svg class="stain" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="44" fill="none" stroke="#B98253" stroke-width="5" opacity=".55"/>
+          <circle cx="60" cy="60" r="41" fill="none" stroke="#B98253" stroke-width="1.5" opacity=".35"/>
+        </svg>
+      </section>
+    </div>
+  </main>
+
+<script>
+  // Cambia aquí la respuesta y el mensaje.
+  // La respuesta no distingue mayúsculas, tildes ni espacios.
+  const RESPUESTA = "1234";
+  const MENSAJE = "Hola";
+
+  const normalize = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "").toLowerCase();
+
+  const form = document.getElementById("form");
+  const input = document.getElementById("r");
+  const card = document.getElementById("card");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if (normalize(input.value) === normalize(RESPUESTA)) {
+      document.getElementById("message").textContent = MENSAJE;
+      input.blur();
+      card.classList.add("open");
+      document.getElementById("front").setAttribute("aria-hidden", "true");
+      document.getElementById("back").setAttribute("aria-hidden", "false");
+    } else {
+      input.value = "";
+      input.placeholder = "Casi. Prueba otra";
+      form.classList.remove("shake");
+      void form.offsetWidth;
+      form.classList.add("shake");
+      input.focus();
+    }
+  });
+</script>
+</body>
+</html>
